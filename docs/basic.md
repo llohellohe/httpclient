@@ -190,5 +190,5 @@ AutoRetryHttpClient默认使用DefaultServiceUnavailableRetryStrategy（503重�
 
 ####类图
 本例中的类图：
-
+![image](https://raw.github.com/llohellohe/httpclient/master/docs/httpclient-basic.cld.jpg)
 ￼
