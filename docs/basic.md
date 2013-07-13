@@ -185,5 +185,10 @@ ResponseHandler用于方便的处理响应信息。
 
 AutoRetryHttpClient默认使用DefaultServiceUnavailableRetryStrategy（503重试）的重试逻辑。
 
+[重试的实例代码](https://github.com/llohellohe/httpclient/blob/master/httpclient/src/test/java/yangqi/hc/AutoRetryClientTest.java)
+
+
+####类图
+本例中的类图：
 
 ￼
