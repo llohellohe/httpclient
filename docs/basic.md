@@ -28,6 +28,8 @@
             HttpContext context)
         throws IOException, ClientProtocolException;
         
+[HttpClient 实例代码](https://github.com/llohellohe/httpclient/blob/master/httpclient/src/test/java/yangqi/hc/HttpClientTest.java) 
+        
 
 ####HttpContext
 `HttpContext`代表HTTP处理时的执行状态，它存储逻辑相关的组件的一些上下文信息，基本提供key-value的属性值和属性名。
@@ -51,11 +53,16 @@
 4.	HTTP_TARGET_HOST
 5.	HTTP_PROXY_HOST
 
-
-
+[HttpContext 实例代码](https://github.com/llohellohe/httpclient/blob/master/httpclient/src/test/java/yangqi/hc/HttpContextTest.java)
 
 ####HttpParams
+HttpParams类似于HttpClient，都是以key value的形式存放一些状态信息。
+
+不同点在于：
+
 该类是一些值不可变的参数的集合，它定义了Http组件的运行时行为，该类期望被实现成一次写入，多次读取的模式。
+
+比如useragent等参数设置。
 
 定义的方法有：
 
@@ -68,6 +75,13 @@
 类SyncBasicHttpParams是个线程安全的HttpParams实现，它的所有方法都是同步的。
 
 SyncBasicHttpParams继承了BasicHttpParams，BasicHttpParams内部使用HashMap保存参数。
+
+
+	httpget.getParams().setParameter(CoreProtocolPNames.PROTOCOL_VERSION,	    HttpVersion.HTTP_1_1); // Use HTTP 1.1 for this request only	httpget.getParams().setParameter(CoreProtocolPNames.USE_EXPECT_CONTINUE,	    Boolean.FALSE);
+	    
+CoreProtocolPNames中定义了一些常见的参数名称，比如：
+
+1.	USER_AGENT ：ua信息	    
 
 ####HttpMessage
 HttpMessage有两部分组成：
@@ -158,4 +172,18 @@ ResponseHandler用于方便的处理响应信息。
 		URIBuilder builder = new URIBuilder();		builder.setScheme("http").setHost("www.google.com").setPath("/search")	    .setParameter("q", "httpclient")
 	
 通过`builder.toBuild`可以获得URI。	
+
+
+####重试
+######HttpRequestRetryHandler
+当发生可以恢复的异常时(IO Error)，可以使用HttpRequestRetryHandler 来自动重试请求。
+
+######ServiceUnavailableRetryStrategy
+如果遇到服务不可用，则可以通过使用AutoRetryHttpClient 替代DefaultHttpClient，
+
+设置ServiceUnavailableRetryStrategy的实现后即可实现重试。
+
+AutoRetryHttpClient默认使用DefaultServiceUnavailableRetryStrategy（503重试）的重试逻辑。
+
+
 ￼
